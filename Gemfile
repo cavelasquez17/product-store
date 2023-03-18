@@ -9,8 +9,8 @@ gem "rails", "~> 7.0.4", ">= 7.0.4.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 
-# Use sqlite3 as the database for Active Record
-gem "sqlite3", "~> 1.4"
+gem 'pg'
+gem 'httparty', '~> 0.21.0'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
@@ -70,3 +70,12 @@ group :test do
   gem "selenium-webdriver"
   gem "webdrivers"
 end
+
+gem 'byebug'
+
+# https://rubygems.org/gems/devise
+gem 'devise', '~> 4.9.0'
+gem 'dotenv-rails', groups: [:development, :test]
+gem 'bootstrap-sass', '~> 3.3.7'
+gem 'sassc-rails', '~> 2.1'
+

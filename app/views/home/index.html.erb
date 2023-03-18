@@ -1,0 +1,40 @@
+<h1>Productos</h1>
+
+<form action="/" method="get">
+    <div class="form-group">
+      <%= label_tag(:name_filter, "Nombre") %>
+      <%= text_field_tag(:name_filter, params[:name_filter], class: "form-control") %>
+    </div>
+    <div class="form-group">
+      <%= label_tag(:price_min, "Precio mínimo") %>
+      <%= number_field_tag(:price_min, params[:price_min], class: "form-control") %>
+    </div>
+    <div class="form-group">
+      <%= label_tag(:price_max, "Precio máximo") %>
+      <%= number_field_tag(:price_max, params[:price_max], class: "form-control") %>
+    </div>
+    <button type="submit">Filtrar</button>
+    <%= link_to "Borrar filtros", root_path(clear_filters: '') %>
+</form>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Precio</th>
+      <th>Detalles</th>
+    </tr>
+  </thead>
+  <tbody>
+    <p>
+        <%= link_to "Ordenar por nombre del producto (ascendente)", root_path(sort: :name) %>
+    </p>
+    <% @products.each do |product| %>
+      <tr>
+        <td><%= product['title'] %></td>
+        <td><%= number_to_currency(product['price']) %></td>
+        <td><%= link_to 'Ver Detalle', show_product_path(product: product), class: "btn btn-primary" %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
