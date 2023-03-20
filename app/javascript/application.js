@@ -1,10 +1,8 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-//= require bootstrap
-import "@hotwired/turbo-rails"
 import "controllers"
 
 $('.carousel').carousel();
-window.addEventListener('load', function() {
+document.addEventListener("DOMContentLoaded", () => {
     const price = document.getElementById('unit-price').getAttribute('data-price'); // Precio unitario del producto
     const totalCostDisplay = document.getElementById("total-cost-display");
     const quantityInput = document.getElementById("quantity-input");
@@ -16,7 +14,5 @@ window.addEventListener('load', function() {
     }
     
     quantityInput.addEventListener("change", calculateTotalCost);
-    
-    calculateTotalCost(); 
 });
 

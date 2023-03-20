@@ -9,11 +9,10 @@ class ProductsController < ApplicationController
         @total_cost = @product[:price].to_i * @quantity
         if @quantity > @product[:stock].to_i
           flash[:error] = "Lo sentimos, no hay suficiente stock disponible"
-          redirect_to @product and return
+          redirect_to show_product_path(product: @product) and return
         end
-        
         flash[:success] = "Compra realizada con éxito"
-        redirect_to @product
+        redirect_to show_product_path(product: @product)
     end
 
     private
@@ -21,7 +20,7 @@ class ProductsController < ApplicationController
     def product_details
         { category: product_params['category'], description: product_params['description'], 
          title: product_params['title'], rating: validate_rating,
-         images: product_params['images'] || product_params['image'], price: product_params['price'],
+         images: product_params['images'] || [product_params['image']], price: product_params['price'],
          stock: validate_stock }
     end
 
