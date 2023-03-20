@@ -1,40 +1,50 @@
-<h1>Productos</h1>
+<div class="banner">
+  <h1 class="text-center display-4"  style='padding-bottom: 60px;'>Tech Store</h1>
+</div>
 
 <form action="/" method="get">
-    <div class="form-group">
+  <div class="row">
+  <div class="col-md-4" style='padding-bottom: 40px;'>
       <%= label_tag(:name_filter, "Nombre") %>
-      <%= text_field_tag(:name_filter, params[:name_filter], class: "form-control") %>
-    </div>
-    <div class="form-group">
+      <%= text_field_tag(:name_filter, params[:name_filter], class: "form-control form-control-sm") %>
+      </div>
+      <div class="col-md-4">
       <%= label_tag(:price_min, "Precio mínimo") %>
-      <%= number_field_tag(:price_min, params[:price_min], class: "form-control") %>
+      <%= number_field_tag(:price_min, params[:price_min], class: "form-control form-control-sm") %>
     </div>
-    <div class="form-group">
+    <div class="col-md-4">
       <%= label_tag(:price_max, "Precio máximo") %>
-      <%= number_field_tag(:price_max, params[:price_max], class: "form-control") %>
+      <%= number_field_tag(:price_max, params[:price_max], class: "form-control form-control-sm") %>
     </div>
+  </div>
+  <div >
+  <div class="text-center" style='padding-bottom: 60px;'>
     <button type="submit">Filtrar</button>
     <%= link_to "Borrar filtros", root_path(clear_filters: '') %>
+  </div>
 </form>
 
 <table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Precio</th>
-      <th>Detalles</th>
-    </tr>
-  </thead>
   <tbody>
-    <p>
-        <%= link_to "Ordenar por nombre del producto (ascendente)", root_path(sort: :name) %>
-    </p>
+  <p>
+  <%= link_to "Ordenar por nombre del producto (ascendente)", root_path(sort: :name) %>
+  </p>
+  <div class="container">
+    <div class="row">
     <% @products.each do |product| %>
-      <tr>
-        <td><%= product['title'] %></td>
-        <td><%= number_to_currency(product['price']) %></td>
-        <td><%= link_to 'Ver Detalle', show_product_path(product: product), class: "btn btn-primary" %></td>
-      </tr>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <img src="<%= product['images']&.first || product['image'] %>"  alt="Producto" class="card-img-top mx-auto d-block" style="width: 200px; height: 200px;">
+          <div class="card-body">
+            <h5 class="card-title"><%= product['title'] %></h5>
+            <p class="card-text"><%= product['description'] %></p>
+            <p class="card-text">Precio: <%= number_to_currency(product['price']) %> MXN</p>
+            <p><%= link_to 'Ver Detalle', show_product_path(product: product), class: "btn btn-primary" %></p>
+          </div>
+        </div>
+      </div>
     <% end %>
+  </div>
+  </div>
   </tbody>
 </table>

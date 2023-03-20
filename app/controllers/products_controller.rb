@@ -3,6 +3,19 @@ class ProductsController < ApplicationController
         @product = OpenStruct.new(product_details)
     end
 
+    def purchase_product
+        @product = product_params 
+        @quantity = params[:quantity].to_i
+        @total_cost = @product[:price].to_i * @quantity
+        if @quantity > @product[:stock].to_i
+          flash[:error] = "Lo sentimos, no hay suficiente stock disponible"
+          redirect_to @product and return
+        end
+        
+        flash[:success] = "Compra realizada con éxito"
+        redirect_to @product
+    end
+
     private
 
     def product_details
