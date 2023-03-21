@@ -1,0 +1,43 @@
+<div class="container">
+  <h1>Mi Carrito de compras</h1>
+  <div class="row">
+    <div class="col-md-8">
+      <table class="table table-responsive">
+        <thead class="thead-dark">
+          <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @cart&.product_items&.each do |product_item| %>
+            <tr>
+                <td>
+                    <img src="<%=product_item.image%>" alt="miniatura del producto" class="img-thumbnail" style='width: 150px; height: 150px;'>
+                    <p><%=product_item.name%></p>
+                </td>
+                    <td><%=product_item.quantity%></td>
+                    <td>$<%=product_item.price%></td>
+                <td>
+                    <%= link_to "Eliminar", delete_from_cart_path(product_item),data: {turbo_method: :delete}, class: "btn btn-danger btn-sm" %>
+                </td>
+            </tr>
+          <% end %>
+          </tbody>
+      </table>
+    <a href="<%= root_path %>" class="btn btn-primary">Volver al Home</a>
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Resumen de la compra</h5>
+          <p class="card-text">Cantidad de productos: <span class="badge badge-secondary"><%= @cart&.product_items&.count %></span></p>
+          <p class="card-text">Total a pagar: $ <%= @total_price %> </p>
+          <a href="" class="btn btn-primary">Pagar</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

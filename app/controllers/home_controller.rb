@@ -19,10 +19,13 @@ class HomeController < ApplicationController
     private
 
     def fecth_products
-        response_fake = HTTParty.get('https://fakestoreapi.com/products')
-        fake_store_body = JSON.parse(response_fake.body)
-        response_dummy = HTTParty.get('https://dummyjson.com/products')
-        dummy_store_body = JSON.parse(response_dummy.body)['products']
-        fake_store_body + dummy_store_body
+      request_apis(URL_FAKE_STORE) + request_apis(URL_DUMMY_STORE)
+    end
+
+    def request_apis(url)
+      response = HTTParty.get(url)
+      return JSON.parse(response.body)['products'] if url == URL_DUMMY_STORE
+
+      JSON.parse(response.body)
     end
 end

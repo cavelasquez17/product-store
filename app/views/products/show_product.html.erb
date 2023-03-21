@@ -46,13 +46,16 @@
     <p>Rating: <%= @product['rating']%></p>
     <p>Stock: <%= @product['stock']%></p>
    
-    <%= form_tag purchase_product_path(product: @product.to_h), method: :post do %>
+    <%= form_tag add_to_cart_path(product: @product.to_h), method: :post do %>
       <% if @product['stock'].to_i > 0 %>
         <label for="quantity">Cantidad:</label>
         <%= number_field_tag :quantity, 1, min: 1, class: "form-control", id: "quantity-input" %>
         <label for="total_cost" '<%= %>' >Costo total:</label>
         <p id="total-cost-display"></p>
-        <%= submit_tag 'Comprar', class: 'btn btn-primary' %>
+        <%= submit_tag 'Añadir al Carrito', class: 'btn btn-primary' %>
+        <% if current_user&.cart&.product_items && current_user.cart.product_items.count > 0 %>
+          <a href="<%= cart_path %>" class="btn btn-primary">Ir al carrito</a>
+        <% end %>
         <a href="<%= root_path %>" class="btn btn-primary">Volver al Home</a>
       <% else %>
         <p>No hay Stock Disponible de este producto</p>

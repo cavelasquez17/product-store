@@ -1,18 +1,8 @@
 class ProductsController < ApplicationController
+    before_action :authenticate_user!
+    
     def show_product
         @product = OpenStruct.new(product_details)
-    end
-
-    def purchase_product
-        @product = product_params 
-        @quantity = params[:quantity].to_i
-        @total_cost = @product[:price].to_i * @quantity
-        if @quantity > @product[:stock].to_i
-          flash[:error] = "Lo sentimos, no hay suficiente stock disponible"
-          redirect_to show_product_path(product: @product) and return
-        end
-        flash[:success] = "Compra realizada con éxito"
-        redirect_to show_product_path(product: @product)
     end
 
     private
