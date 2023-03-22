@@ -14,4 +14,37 @@
  *= require_self
  */
  @import "bootstrap-sprockets";
- @import "bootstrap";
+
+ body {
+    background-color: #e1e1e1;
+ }
+
+ .row {
+    row-gap: 30px;
+ }
+
+ .card {
+    min-height: 200px;
+    height: 100%;
+    transition: transform 0.3s;
+    border-radius: 8px;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+  }
+
+  .card-img-top {
+    width: 200px;
+    height: 200px;
+    margin: 10px auto;
+  }
+
+  .card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 75px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }

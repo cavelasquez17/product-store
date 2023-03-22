@@ -1,6 +1,15 @@
+<%= render "navigation/navbar" %>
+
+<div class="container">
 <div class="row mt-3">
   <div class="col-md-6">
-    <div id="product-images" class="carousel slide" data-ride="carousel">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="<%= root_path %>">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page"><%= @product['title'] %></li>
+      </ol>
+    </nav>
+   <div id="product-images" class="carousel slide" data-ride="carousel">
       <ol class="carousel-indicators">
         <% if @product['images'].is_a?(Array) %>
           <% @product['images'].each_with_index do |_url_image, index| %>
@@ -13,20 +22,22 @@
         <% end %>
       </ol>
       <div class="carousel-inner">
-      <% if @product['images'].is_a?(Array) %>
-        <div class="carousel-item active">
-          <div class="card-body">
-              <img src=<%= @product['images'].first %> class="card-img-top mx-auto d-block" style="width: 400px; height: 500px; alt="Imagen del producto">
-          </div>
-        </div>
-        <% if @product['images'].count > 1 %>
-          <% @product['images'][1...].each do |url_image| %>
-            <div class="carousel-item">
-              <img src=<%=url_image%>  class="card-img-top mx-auto d-block" style="width: 400px; height: 500px; alt="Imagen del producto">
+        <% if @product['images'].is_a?(Array) %>
+          <div class="carousel-item active">
+            <div class="card-body">
+              <img src="<%= @product['images'].first %>" class="card-img-top mx-auto d-block" style="width: 100%; height: 500px;" alt="Imagen del producto">
             </div>
+          </div>
+          <% if @product['images'].count > 1 %>
+            <% @product['images'][1...].each do |url_image| %>
+              <div class="carousel-item">
+                <div class="card-body">
+                  <img src="<%=url_image%>"  class="card-img-top mx-auto d-block" style="width: 100%; height: 500px;" alt="Imagen del producto">
+                </div>
+              </div>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
       </div>
       <a class="carousel-control-prev" href="#product-images" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -37,29 +48,38 @@
         <span class="sr-only">Siguiente</span>
       </a>
     </div>
-  </div>
-  <div class="col-md-6">
-    <h2><%= @product['title'] %></h2>
-    <label class="font-weight-bold">Precio Unitario: <span id="unit-price" data-price="<%= @product.price %>">$<%= @product.price %></span></label>
-    <p><%= @product['description']%></p>
-    <p>Categoria: <%= @product['category'].capitalize%></p>
-    <p>Rating: <%= @product['rating']%></p>
-    <p>Stock: <%= @product['stock']%></p>
-   
-    <%= form_tag add_to_cart_path(product: @product.to_h), method: :post do %>
-      <% if @product['stock'].to_i > 0 %>
-        <label for="quantity">Cantidad:</label>
-        <%= number_field_tag :quantity, 1, min: 1, class: "form-control", id: "quantity-input" %>
-        <label for="total_cost" '<%= %>' >Costo total:</label>
-        <p id="total-cost-display"></p>
-        <%= submit_tag 'Añadir al Carrito', class: 'btn btn-primary' %>
-        <% if current_user&.cart&.product_items && current_user.cart.product_items.count > 0 %>
-          <a href="<%= cart_path %>" class="btn btn-primary">Ir al carrito</a>
+    <% if @product['images'].count > 1 %>
+      <div class="row mt-3">
+        <% @product['images'][1..3].each do |url_image| %>
+          <div class="col-md-4">
+            <a href="#" data-target="#product-images" data-slide-to="<%= @product['images'].index(url_image) + 1 %>">
+              <img src="<%= url_image %>" class="img-thumbnail" style="width: 100%; height: 100px;">
+            </a>
+          </div>
         <% end %>
-        <a href="<%= root_path %>" class="btn btn-primary">Volver al Home</a>
-      <% else %>
-        <p>No hay Stock Disponible de este producto</p>
-      <% end %>
+      </div>
     <% end %>
   </div>
+  <div class="col-md-6">
+    <h1 class="display-4"><%= @product['title'] %></h1>
+  <p class="lead"><%= @product['description'] %></p>
+  <p class="h4">Precio Unitario: $<%= @product.price %></p>
+  <hr>
+  <p>Categoría: <%= @product['category'].capitalize %></p>
+  <p>Rating: <%= @product['rating'] %></p>
+  <p>Stock: <%= @product['stock'] %></p>
+  <%= form_tag purchase_product_path(product: @product.to_h), method: :post do %>
+    <% if @product['stock'].to_i > 0 %>
+      <label for="quantity">Cantidad:</label>
+      <%= number_field_tag :quantity, 1, min: 1, class: "form-control", id: "quantity-input" %>
+      <label for="total_cost" '<%= %>' >Costo total:</label>
+      <p id="total-cost-display"></p>
+      <%= submit_tag 'Comprar', class: 'btn btn-primary' %>
+      <a href="<%= root_path %>" class="btn btn-primary">Volver al Home</a>
+    <% else %>
+      <p>No hay Stock Disponible de este producto</p>
+    <% end %>
+  <% end %>
+  </div>
+</div>
 </div>

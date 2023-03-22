@@ -1,0 +1,28 @@
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="height: 100px;">
+<div class="container">
+  <%= link_to image_tag('logo.png', alt: 'Tech Store Logo', class: 'img-fluid', style: 'height: 80px;'), root_path, class: 'navbar-brand' %>
+<div class="col-md-4" >
+  <form action="/" method="get" class="d-flex">
+    <span class="input-group-btn">
+      <button class="btn btn-secondary" type="submit">Buscar</button>
+    </span>
+    <%= text_field_tag(:name_filter, params[:name_filter], class: "form-control form-control-sm", placeholder: "Encuentra cualquier producto!") %>
+  </form>
+</div>
+
+  <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <%= link_to "Productos", root_path, class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Mi cuenta", "#", class: "nav-link" %>
+      </li>
+      <li class="nav-item">
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, class: "nav-link" %>
+      </li>
+    </ul>
+  </div>
+</div>
+</nav>

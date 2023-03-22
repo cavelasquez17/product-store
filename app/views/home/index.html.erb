@@ -1,14 +1,23 @@
-<div class="banner">
-  <h1 class="text-center display-4"  style='padding-bottom: 60px;'>Tech Store</h1>
+<%= render "navigation/navbar" %>
+
+
+<div class="container mt-3">
+  <div class="row justify-content-between">
+    <% @random_categories.each do |category| %>
+      <div class="col-md-2 text-center">
+        <%= link_to category.capitalize, root_path(category: category), class: 'btn btn-dark' %>
+      </div>
+    <% end %>
+  </div>
 </div>
 
 <form action="/" method="get">
-  <div class="row">
-  <div class="col-md-4" style='padding-bottom: 40px;'>
-      <%= label_tag(:name_filter, "Nombre") %>
-      <%= text_field_tag(:name_filter, params[:name_filter], class: "form-control form-control-sm") %>
-      </div>
-      <div class="col-md-4">
+<div class="container">
+  <div class="row" style="padding-top: 35px;">
+    <div class="col-md-4 d-flex align-items-center">
+      <h4>Ordernar Por:</h4>
+    </div>
+    <div class="col-md-4">
       <%= label_tag(:price_min, "Precio mínimo") %>
       <%= number_field_tag(:price_min, params[:price_min], class: "form-control form-control-sm") %>
     </div>
@@ -17,19 +26,26 @@
       <%= number_field_tag(:price_max, params[:price_max], class: "form-control form-control-sm") %>
     </div>
   </div>
-  <div >
-  <div class="text-center" style='padding-bottom: 60px;'>
-    <button type="submit">Filtrar</button>
-    <%= link_to "Borrar filtros", root_path(clear_filters: '') %>
+  <div class="row justify-content-end mt-3">
+    <div class="col-md-6">
+      <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Filtrar</button>
+        <%= link_to "Borrar filtros", root_path(clear_filters: ''), class: 'btn btn-secondary ml-3' %>
+      </div>
+    </div>
+  </div>
+
+  <h5>
+  <%= link_to "Ordenar por nombre del producto (ascendente)", root_path(sort: :name) %>
+  </h5>
   </div>
 </form>
 
+
 <table class="table table-striped">
   <tbody>
-  <p>
-  <%= link_to "Ordenar por nombre del producto (ascendente)", root_path(sort: :name) %>
-  </p>
-  <div class="container">
+  <div class="container" style="padding-top: 60px;">
+
     <div class="row">
     <% @products.each do |product| %>
       <div class="col-md-4">
