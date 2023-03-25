@@ -33,7 +33,7 @@ class CartsController < ApplicationController
     def validate_quantity
         @product = product_params
         @quantity = params[:quantity].to_i
-        @total_price = @product[:stock].to_i * @quantity
+        @total_price = @product[:price].to_i * @quantity
         return unless @quantity > @product[:stock].to_i
         
         flash[:error] = "Lo sentimos, no hay suficiente stock disponible"

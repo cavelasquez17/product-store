@@ -6,8 +6,9 @@
         <thead class="thead-dark">
           <tr>
             <th>Producto</th>
+            <th>Precio Unidad</th>
             <th>Cantidad</th>
-            <th>Precio</th>
+            <th>Precio Total</th>
             <th></th>
           </tr>
         </thead>
@@ -18,8 +19,9 @@
                     <img src="<%=product_item.image%>" alt="miniatura del producto" class="img-thumbnail" style='width: 150px; height: 150px;'>
                     <p><%=product_item.name%></p>
                 </td>
+                    <td>$ <%=product_item.price/product_item.quantity%></td>
                     <td><%=product_item.quantity%></td>
-                    <td>$<%=product_item.price%></td>
+                    <td>$ <%=product_item.price%></td>
                 <td>
                     <%= link_to "Eliminar", delete_from_cart_path(product_item),data: {turbo_method: :delete}, class: "btn btn-danger btn-sm" %>
                 </td>
